@@ -17,20 +17,23 @@ use s9e\TextFormatter\Configurator;
 return [
     (new Extend\Formatter())
         ->configure(function (Configurator $configurator) {
+            // 修改 url 标签使其在新窗口打开
             $configurator->BBCodes->addFromRepository('URL');
-
             // Get the default URL template as a DOMDocument
             $dom = $configurator->tags['URL']->template->asDOM();
-
             // Set a target="_blank" attribute to any <a> element
             foreach ($dom->getElementsByTagName('a') as $a)
             {
-                $a->setAttribute('target', '_blank');
-            }
+                // create icon
+                $icon = $dom->createElement('i');
+                $icon->setAttribute('class','fas fa-external-link-alt');
 
+                $a->setAttribute('target', '_blank');
+                $a->appendChild($icon);
+            }
             // Save the changes
             $dom->saveChanges();
 
-            
+
         })
 ];
