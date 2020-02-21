@@ -18,7 +18,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "JJwind320\\FlarumExtFormatting\\": "src/"
+      "JJwind320\\FlarumExtFormatting\\": "src"
     }
   },
   "extra": {
