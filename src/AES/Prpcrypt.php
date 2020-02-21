@@ -3,7 +3,7 @@
 namespace JJwind320\FlarumExtFormatting\AES;
 
 use JJwind320\FlarumExtFormatting\AES\ErrorCode;
-use JJwind320\FlarumExtFormatting\AES\PKCS7Encoder;
+use JJwind320\FlarumExtFormatting\AES\Pkcs7Encoder;
 
 /**
  * Prpcrypt class
@@ -29,7 +29,7 @@ class Prpcrypt
             $iv = substr($key, 0, 16);
 
 			//使用自定义的填充方式对明文进行补位填充
-			$pkc_encoder = new PKCS7Encoder;
+			$pkc_encoder = new Pkcs7Encoder;
 			$text = $pkc_encoder->encode($text);
 
             $encrypted = openssl_encrypt($text, 'AES-256-CBC', substr($key, 0, 32), 
@@ -64,7 +64,7 @@ class Prpcrypt
         try
         {
 			//去除补位字符
-			$pkc_encoder = new PKCS7Encoder;
+			$pkc_encoder = new Pkcs7Encoder;
 			$result = $pkc_encoder->decode($decrypted);
 			//去除16位随机字符串,网络字节序和AppId
 			if (strlen($result) < 16)

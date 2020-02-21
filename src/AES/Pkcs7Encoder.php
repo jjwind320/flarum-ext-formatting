@@ -4,11 +4,11 @@ namespace JJwind320\FlarumExtFormatting\AES;
 
 
 /**
- * PKCS7Encoder class
+ * Pkcs7Encoder class
  *
  * 提供基于PKCS7算法的加解密接口.
  */
-class PKCS7Encoder
+class Pkcs7Encoder
 {
 	public static $block_size = 32;
 
@@ -19,12 +19,12 @@ class PKCS7Encoder
 	 */
 	function encode($text)
 	{
-		$block_size = PKCS7Encoder::$block_size;
+		$block_size = Pkcs7Encoder::$block_size;
 		$text_length = strlen($text);
 		//计算需要填充的位数
-		$amount_to_pad = PKCS7Encoder::$block_size - ($text_length % PKCS7Encoder::$block_size);
+		$amount_to_pad = Pkcs7Encoder::$block_size - ($text_length % Pkcs7Encoder::$block_size);
 		if ($amount_to_pad == 0) {
-			$amount_to_pad = PKCS7Encoder::block_size;
+			$amount_to_pad = Pkcs7Encoder::block_size;
 		}
 		//获得补位所用的字符
 		$pad_chr = chr($amount_to_pad);
