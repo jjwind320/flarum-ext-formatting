@@ -3,7 +3,8 @@
 namespace JJwind320\FlarumExtFormatting;
 
 use Flarum\Settings\SettingsRepositoryInterface;
-use s9e\TextFormatter\Configurator;
+use Illuminate\Contracts\Events\Dispatcher;
+use Flarum\Formatter\Event\Configuring;
 use JJwind320\FlarumExtFormatting\AES\Prpcrypt;
 use JJwind320\FlarumExtFormatting\AES\ErrorCode;
 
@@ -20,15 +21,23 @@ class FormatterConfigurator
         $this->settings = $settings;
     }
 
-    public function Configure(Configurator $configurator)
+    /**
+     * Subscribes to the Flarum events.
+     *
+     * @param Dispatcher $events
+     */
+    public function subscribe(Dispatcher $events)
     {
-        // $appId = 'rmgc-bbs';
-        // $encodingAesKey = '/3J4trT1ZU0QMGv8upvbpN0YjdYdKT0v4V8QkZcSSQw';
-        // $fBaseAddress = 'http://spider.rimag.com.cn/view/';
+        $events->listen(Configuring::class, [$this, 'configureFormatter']);
+    }
 
+    public function configureFormatter(Configuring $event)
+    {
         $encPacsAppId = $this->settings->get('jjwind320-ext-formatting.enc_pacs_app_id');
         $encPacsAesKey = $this->settings->get('jjwind320-ext-formatting.enc_pacs_aes_key');
         $encPacsBaseAddress = $this->settings->get('jjwind320-ext-formatting.enc_pacs_base_address');
+
+        $configurator = $event->configurator;
 
         // 修改 url 标签使其在新窗口打开
         $configurator->BBCodes->addFromRepository('URL');
@@ -139,9 +148,9 @@ class FormatterConfigurator
 
             $tag->attributes->add('url')->filterChain->append('#url');
             $tag->filterChain->prepend('JJwind320\\FlarumExtFormatting\\FormatterConfigurator::ConvertWeiyun')
-                ->addParameterByName($encPacsAppId)
-                ->addParameterByName($encPacsAesKey)
-                ->addParameterByName($encPacsBaseAddress);
+                ->addParameterByValue($encPacsAppId)
+                ->addParameterByValue($encPacsAesKey)
+                ->addParameterByValue($encPacsBaseAddress);
             $tag->template = '<xsl:if test="@url"><div>'
                 . '<a target="_blank" href="{@url}">【一脉隐私安全阅片器】 点击新窗口打开'
                 . '<i class="fas fa-link" style="margin:0 0 0 5px;"></i></a></div></xsl:if>'

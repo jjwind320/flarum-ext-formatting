@@ -12,16 +12,14 @@
 namespace JJwind320\FlarumExtFormatting;
 
 use Flarum\Extend;
-use s9e\TextFormatter\Configurator;
+use Illuminate\Events\Dispatcher;
 use JJwind320\FlarumExtFormatting\FormatterConfigurator;
 
 return [
     (new Extend\Frontend('admin'))
         ->js(__DIR__.'/js/dist/admin.js'),
-
-    (new Extend\Formatter())
-        ->configure(function (Configurator $configurator) {
-            $fc = new FormatterConfigurator();
-            $fc->Configure($configurator);
-        })
+    new Extend\Locales(__DIR__ . '/resources/locale'),
+    function (Dispatcher $dispatcher) {
+        $dispatcher->subscribe(FormatterConfigurator::class);
+    }
 ];

@@ -6,9 +6,7 @@ export default class FormattingSettingsModal extends SettingsModal {
   }
 
   title() {
-    return app.translator.trans(
-      "jjwind320-formatting.admin.formatting_settings.title"
-    );
+    return app.translator.trans("jjwind320-formatting.admin.settings.title");
   }
 
   form() {
@@ -16,7 +14,7 @@ export default class FormattingSettingsModal extends SettingsModal {
       <div className="Form-group">
         <label>
           {app.translator.trans(
-            "jjwind320-formatting.admin.formatting_settings.enc_pacs_app_id"
+            "jjwind320-formatting.admin.settings.enc_pacs_app_id"
           )}
         </label>
         <input
@@ -28,7 +26,7 @@ export default class FormattingSettingsModal extends SettingsModal {
       <div className="Form-group">
         <label>
           {app.translator.trans(
-            "jjwind320-formatting.admin.formatting_settings.enc_pacs_aes_key"
+            "jjwind320-formatting.admin.settings.enc_pacs_aes_key"
           )}
         </label>
         <input
@@ -40,7 +38,7 @@ export default class FormattingSettingsModal extends SettingsModal {
       <div className="Form-group">
         <label>
           {app.translator.trans(
-            "jjwind320-formatting.admin.formatting_settings.enc_pacs_base_address"
+            "jjwind320-formatting.admin.settings.enc_pacs_base_address"
           )}
         </label>
         <input

@@ -1,0 +1,7 @@
+jjwind320-formatting:
+  admin:
+    settings:
+      title: Settings
+      enc_pacs_app_id: AppId for encrypt pacs
+      enc_pacs_aes_key: AES Key for encrypt pacs
+      enc_pacs_base_address: Base Address for encrypt pacs

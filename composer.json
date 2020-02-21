@@ -25,9 +25,9 @@
     "flarum-extension": {
       "title": "Formatting Extension by Yinshaobin",
       "icon": {
-        "name": "",
-        "backgroundColor": "",
-        "color": ""
+        "name": "fas fa-info",
+        "backgroundColor": "#51c332",
+        "color": "#fff"
       }
     },
     "flagrow": {

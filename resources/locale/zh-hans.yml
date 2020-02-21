@@ -1,0 +1,7 @@
+jjwind320-formatting:
+  admin:
+    settings:
+      title: 配置
+      enc_pacs_app_id: 加密阅片服务器 AppId
+      enc_pacs_aes_key: 加密阅片服务器 AES Key
+      enc_pacs_base_address: 加密阅片服务器基地址
