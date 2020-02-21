@@ -152,7 +152,7 @@ class FormatterConfigurator
                 ->addParameterByValue($encPacsAesKey)
                 ->addParameterByValue($encPacsBaseAddress);
             $tag->template = '<xsl:if test="@url"><div>'
-                . '<a target="_blank" href="{@url}">【一脉隐私安全阅片器】 点击新窗口打开'
+                . '<a target="_blank" href="{@url}">【一脉云安全阅片器】点击在新窗口打开'
                 . '<i class="fas fa-link" style="margin:0 0 0 5px;"></i></a></div></xsl:if>'
                 . $tag->template;
         }
