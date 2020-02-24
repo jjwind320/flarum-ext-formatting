@@ -33,44 +33,66 @@ class FormatterConfigurator
 
     public function configureFormatter(Configuring $event)
     {
-        $encPacsAppId = $this->settings->get('jjwind320-ext-formatting.enc_pacs_app_id');
-        $encPacsAesKey = $this->settings->get('jjwind320-ext-formatting.enc_pacs_aes_key');
-        $encPacsBaseAddress = $this->settings->get('jjwind320-ext-formatting.enc_pacs_base_address');
+        $this.addRepositories();
+        $this.configureUrl();
 
+        if ($this->settings->get('fof-formatting.plugin.mediaembed'))
+        {
+            $this->addMediaEmbedSites($event);
+            $this->addPacs($event);
+        }
+    }
+
+    // added by jjwind320
+    // add tags from s9e\TextFormatter
+    private function addRepositories(Configuring $event)
+    {
         $configurator = $event->configurator;
 
-        // 修改 url 标签使其在新窗口打开
-        $configurator->BBCodes->addFromRepository('URL');
-        // Get the default URL template as a DOMDocument
-        $dom = $configurator->tags['URL']->template->asDOM();
-        // Set a target="_blank" attribute to any <a> element
-        foreach ($dom->getElementsByTagName('a') as $a)
-        {
-            // create icon
-            $icon = $dom->createElement('i');
-            $icon->setAttribute('class','fas fa-link');
-            $icon->setAttribute('style','margin:0 0 0 5px;');
+        $configurator->BBCodes->addFromRepository('TABLE');
+        $configurator->BBCodes->addFromRepository('TBODY');
+        $configurator->BBCodes->addFromRepository('TD');
+        $configurator->BBCodes->addFromRepository('TH');
+        $configurator->BBCodes->addFromRepository('TR');
+        $configurator->BBCodes->addFromRepository('THEAD');
+        $configurator->BBCodes->addFromRepository('HR');
+        $configurator->BBCodes->addFromRepository('FLOAT');
+        $configurator->BBCodes->addFromRepository('BACKGROUND');
+        $configurator->BBCodes->addFromRepository('DL');
+        $configurator->BBCodes->addFromRepository('DT');
+        $configurator->BBCodes->addFromRepository('DD');
+        $configurator->BBCodes->addFromRepository('H1');
+        $configurator->BBCodes->addFromRepository('H2');
+        $configurator->BBCodes->addFromRepository('H3');
+        $configurator->BBCodes->addFromRepository('H4');
+        $configurator->BBCodes->addFromRepository('H5');
+        $configurator->BBCodes->addFromRepository('H6');
+        $configurator->BBCodes->addFromRepository('LEFT');
+        $configurator->BBCodes->addFromRepository('RIGHT');
+        $configurator->BBCodes->addFromRepository('SUB');
+        $configurator->BBCodes->addFromRepository('SUP');
+    }
 
-            $a->setAttribute('target', '_blank');
-            $a->appendChild($icon);
-        }
-        // Save the changes
-        $dom->saveChanges();
+    // added by jjwind320
+    // add mediaembed sites and encryped pacs
+    private function addMediaEmbedSites(Configuring $event)
+    {
+        $configurator = $event->configurator;
 
         // 新增嵌入媒体网站
         // 网易音乐 www.music163.com
-        $configurator->MediaEmbed->add(
-            'music163',
-            [
-                'host'    => 'music.163.com',
-                'extract' => "!music\\.163\\.com/outchain/player\\?type=(?'type'\\d+)&id=(?'id'\\d+)&auto=(?'auto'\\d+)&height=(?'height'\\d+)!",
-                'iframe'  => [
-                    'width'  => "100%",
-                    'height' => 430,
-                    'src'    => '//music.163.com/outchain/player?type={@type}&id={@id}&auto={@auto}&height={@height}'
-                ]
-            ]
-        );
+        // $configurator->MediaEmbed->add(
+        //     'music163',
+        //     [
+        //         'host'    => 'music.163.com',
+        //         'extract' => "!music\\.163\\.com/outchain/player\\?type=(?'type'\\d+)&id=(?'id'\\d+)&auto=(?'auto'\\d+)&height=(?'height'\\d+)!",
+        //         'iframe'  => [
+        //             'width'  => "100%",
+        //             'height' => 430,
+        //             'src'    => '//music.163.com/outchain/player?type={@type}&id={@id}&auto={@auto}&height={@height}'
+        //         ]
+        //     ]
+        // );
         // 哔哩哔哩 www.bilibili.com
         $configurator->MediaEmbed->add(
             'bilibili',
@@ -86,23 +108,23 @@ class FormatterConfigurator
             ]
         );
         // 腾讯视频 v.qq.com
-        $configurator->MediaEmbed->add(
-            'videoqq',
-            [
-                'host'    => 'qq.com',
-                'extract' => [
-                    "!qq\\.com/x/cover/\\w+/(?'id'\\w+)\\.html!",
-                    "!qq\\.com/x/cover/\\w+\\.html\\?vid=(?'id'\\w+)!",
-                    "!qq\\.com/cover/[^/]+/\\w+/(?'id'\\w+)\\.html!",
-                    "!qq\\.com/cover/[^/]+/\\w+\\.html\\?vid=(?'id'\\w+)!",
-                    "!qq\\.com/x/page/(?'id'\\w+)\\.html!",
-                    "!qq\\.com/page/[^/]+/[^/]+/[^/]+/(?'id'\\w+)\\.html!"
-                ],
-                'iframe'  => [
-                    'src'    => '//v.qq.com/txp/iframe/player.html?vid={@id}'
-                ]
-            ]
-        );
+        // $configurator->MediaEmbed->add(
+        //     'videoqq',
+        //     [
+        //         'host'    => 'qq.com',
+        //         'extract' => [
+        //             "!qq\\.com/x/cover/\\w+/(?'id'\\w+)\\.html!",
+        //             "!qq\\.com/x/cover/\\w+\\.html\\?vid=(?'id'\\w+)!",
+        //             "!qq\\.com/cover/[^/]+/\\w+/(?'id'\\w+)\\.html!",
+        //             "!qq\\.com/cover/[^/]+/\\w+\\.html\\?vid=(?'id'\\w+)!",
+        //             "!qq\\.com/x/page/(?'id'\\w+)\\.html!",
+        //             "!qq\\.com/page/[^/]+/[^/]+/[^/]+/(?'id'\\w+)\\.html!"
+        //         ],
+        //         'iframe'  => [
+        //             'src'    => '//v.qq.com/txp/iframe/player.html?vid={@id}'
+        //         ]
+        //     ]
+        // );
         // 虎牙直播 www.huya.com
         $configurator->MediaEmbed->add(
             'huya',
@@ -116,6 +138,15 @@ class FormatterConfigurator
                 ]
             ]
         );
+    }
+
+    private function addPacs(Configuring $event)
+    {
+        $configurator = $event->configurator;
+
+        $pacsAppId = $this->settings->get('jjwind320-ext-formatting.enc_pacs_app_id');
+        $pacsAesKey = $this->settings->get('jjwind320-ext-formatting.enc_pacs_aes_key');
+        $pacsBaseAddress = $this->settings->get('jjwind320-ext-formatting.enc_pacs_base_address');
 
         // 加入一脉阅片支持
         // 微云版本 viewer.weiyun.rimag.com.cn
@@ -128,7 +159,7 @@ class FormatterConfigurator
                 ],
                 'iframe'  => [
                     'height' => 640,
-                    'src'    => $encPacsBaseAddress . '{@path}'
+                    'src'    => $pacsBaseAddress . '{@path}'
                 ]
             ]
         );
@@ -147,14 +178,14 @@ class FormatterConfigurator
             }
 
             $tag->attributes->add('url')->filterChain->append('#url');
-            $tag->filterChain->prepend('JJwind320\\FlarumExtFormatting\\FormatterConfigurator::ConvertWeiyun')
-                ->addParameterByValue($encPacsAppId)
-                ->addParameterByValue($encPacsAesKey)
-                ->addParameterByValue($encPacsBaseAddress);
-            $tag->template = '<xsl:if test="@url"><div>'
+            $tag->filterChain->prepend('FoF\\Formatting\\Listeners\\FormatterConfigurator::ConvertWeiyun')
+                ->addParameterByValue($pacsAppId)
+                ->addParameterByValue($pacsAesKey)
+                ->addParameterByValue($pacsBaseAddress);
+            $tag->template = '<div><xsl:if test="@url"><div>'
                 . '<a target="_blank" href="{@url}">【一脉云安全阅片器】点击在新窗口打开'
-                . '<i class="fas fa-link" style="margin:0 0 0 5px;"></i></a></div></xsl:if>'
-                . $tag->template;
+                . '<i class="fas fa-photo-video" style="margin:0 0 0 5px;"></i></a></div></xsl:if>'
+                . $tag->template . '</div>';
         }
 
         // 阅片快捷标签
@@ -167,7 +198,7 @@ class FormatterConfigurator
         );
     }
 
-    public static function ConvertWeiyun($tag, $encPacsAppId, $encPacsAesKey, $encPacsBaseAddress)
+    public static function ConvertWeiyun($tag, $pacsAppId, $pacsAesKey, $pacsBaseAddress)
     {
         $weiyunPath = $tag->getAttribute('path');
         $fPath = '';
@@ -176,17 +207,38 @@ class FormatterConfigurator
         {
             $weiyunOpenPath = $m['op'];
             $pc = new Prpcrypt;
-            $array = $pc->encrypt($weiyunOpenPath, $encPacsAppId, $encPacsAesKey);
+            $array = $pc->encrypt($weiyunOpenPath, $pacsAppId, $pacsAesKey);
             if ($array[0] == ErrorCode::$OK)
             {
                 $fPath = $array[1];
                 $fPath = str_replace('/','_',$fPath);
                 $fPath = str_replace('+','-',$fPath);
-                $fPath = $fPath . '?appId=' . $encPacsAppId;
+                $fPath = $fPath . '?appId=' . $pacsAppId;
             }
         }
 
         $tag->setAttribute('path', $fPath);
-        $tag->setAttribute('url', $encPacsBaseAddress . $fPath);
+        $tag->setAttribute('url', $pacsBaseAddress . $fPath);
+    }
+
+    // added by jjwind320
+    // add target="_blank" and a icon to url
+    private function configureUrl(Configuring $event)
+    {
+        $configurator = $event->configurator;
+
+        // 修改 url 标签使其在新窗口打开
+        $configurator->BBCodes->addFromRepository('URL');
+        $dom = $configurator->tags['URL']->template->asDOM();
+        foreach ($dom->getElementsByTagName('a') as $a)
+        {
+            $icon = $dom->createElement('i');
+            $icon->setAttribute('class','fas fa-link');
+            $icon->setAttribute('style','margin:0 0 0 5px;');
+
+            $a->setAttribute('target', '_blank');
+            $a->appendChild($icon);
+        }
+        $dom->saveChanges();
     }
 }
