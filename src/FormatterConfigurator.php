@@ -33,8 +33,8 @@ class FormatterConfigurator
 
     public function configureFormatter(Configuring $event)
     {
-        $this.addRepositories();
-        $this.configureUrl();
+        $this->addRepositories();
+        $this->configureUrl();
 
         if ($this->settings->get('fof-formatting.plugin.mediaembed'))
         {
