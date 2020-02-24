@@ -33,8 +33,8 @@ class FormatterConfigurator
 
     public function configureFormatter(Configuring $event)
     {
-        $this->addRepositories();
-        $this->configureUrl();
+        $this->addRepositories($event);
+        //$this->configureUrl($event);
 
         if ($this->settings->get('fof-formatting.plugin.mediaembed'))
         {
@@ -178,13 +178,13 @@ class FormatterConfigurator
             }
 
             $tag->attributes->add('url')->filterChain->append('#url');
-            $tag->filterChain->prepend('FoF\\Formatting\\Listeners\\FormatterConfigurator::ConvertWeiyun')
+            $tag->filterChain->prepend('JJwind320\\FlarumExtFormatting\\FormatterConfigurator::ConvertWeiyun')
                 ->addParameterByValue($pacsAppId)
                 ->addParameterByValue($pacsAesKey)
                 ->addParameterByValue($pacsBaseAddress);
             $tag->template = '<div><xsl:if test="@url"><div>'
-                . '<a target="_blank" href="{@url}">【一脉云安全阅片器】点击在新窗口打开'
-                . '<i class="fas fa-photo-video" style="margin:0 0 0 5px;"></i></a></div></xsl:if>'
+                . '<a href="{@url}">【一脉云安全阅片器】点击大窗查看'
+                . '</a></div></xsl:if>'
                 . $tag->template . '</div>';
         }
 
