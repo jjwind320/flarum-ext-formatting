@@ -8,7 +8,6 @@
 
 本扩展包不能与以下扩展包兼容：
   
-* [jjwind320/flarum-ext-formatting](https://packagist.org/packages/jjwind320/flarum-ext-formatting)
 * [zerosonesfun/bbbbcode](https://packagist.org/packages/zerosonesfun/bbbbcode)
 * [zerosonesfun/font](https://packagist.org/packages/zerosonesfun/font)
 * [zerosonesfun/chat](https://packagist.org/packages/zerosonesfun/chat)
@@ -102,8 +101,8 @@ composer update jjwind320/flarum-ext-formatting
 
 -----
 
-- [哔哩哔哩](https://www.bilibili.com/)
-- [虎牙](https://www.huya.com/)
+- [哔哩哔哩](https://www.bilibili.com/) [MEDIA]哔哩哔哩视频网址[/MEDIA]
+- [虎牙](https://www.huya.com/) [MEDIA]虎牙直播网址[/MEDIA]
 - [s9e/textformatter支持的网站](https://s9etextformatter.readthedocs.io/Plugins/MediaEmbed/Sites/)
-- 安全阅片器支持 
+- 安全阅片器支持 [PACS=阅片地址][/PACS]
 
