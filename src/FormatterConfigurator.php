@@ -192,7 +192,7 @@ class FormatterConfigurator
         $configurator->BBCodes->add(
             'pacs',
             [
-                'defaultAttribute' => ['url'],
+                'defaultAttribute'  => 'url',
                 'tagName'           => 'MEDIA'
             ]
         );
