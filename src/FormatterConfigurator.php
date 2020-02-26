@@ -231,7 +231,7 @@ class FormatterConfigurator
         $dom = $configurator->tags['URL']->template->asDOM();
         foreach ($dom->getElementsByTagName('a') as $a)
         {
-            $a->setAttribute('class', 'jj-f-a')
+            $a->setAttribute('class', 'jj-f-a');
         }
         $dom->saveChanges();
     }
@@ -245,7 +245,7 @@ class FormatterConfigurator
         $dom = $configurator->tags['IMG']->template->asDOM();
         foreach ($dom->getElementsByTagName('img') as $img)
         {
-            $img->setAttribute('class', 'jj-f-img')
+            $img->setAttribute('class', 'jj-f-img');
         }
         $dom->saveChanges();
     }
