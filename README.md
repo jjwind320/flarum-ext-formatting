@@ -84,6 +84,7 @@ composer update jjwind320/flarum-ext-formatting
 
 -----
 
+- Z [Z] 空格
 - CHAT 未完成
 - CARD 未完成
 - HL 未完成

@@ -34,6 +34,7 @@ class FormatterConfigurator
     public function configureFormatter(Configuring $event)
     {
         $this->addRepositories($event);
+        $this->addCustomBbcode($event);
         $this->configureUrl($event);
         $this->configureImg($event);
 
@@ -72,6 +73,17 @@ class FormatterConfigurator
         $configurator->BBCodes->addFromRepository('RIGHT');
         $configurator->BBCodes->addFromRepository('SUB');
         $configurator->BBCodes->addFromRepository('SUP');
+    }
+
+    // added by jjwind320
+    private function addCustomBbcode(Configuring $event)
+    {
+        $configurator = $event->configurator;
+
+        $configurator->BBCodes->addCustom(
+            '[z size={NUMBER?;defaultValue=2}]',
+            '<span style="display:inline-block;width:{NUMBER}em;"></span>'
+        );
     }
 
     // added by jjwind320
