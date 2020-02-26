@@ -34,7 +34,8 @@ class FormatterConfigurator
     public function configureFormatter(Configuring $event)
     {
         $this->addRepositories($event);
-        //$this->configureUrl($event);
+        $this->configureUrl($event);
+        $this->configureImg($event);
 
         if ($this->settings->get('fof-formatting.plugin.mediaembed'))
         {
@@ -222,22 +223,29 @@ class FormatterConfigurator
     }
 
     // added by jjwind320
-    // add target="_blank" and a icon to url
     private function configureUrl(Configuring $event)
     {
         $configurator = $event->configurator;
 
-        // 修改 url 标签使其在新窗口打开
-        $configurator->BBCodes->addFromRepository('URL');
+        // 修改 url 标签增加样式
         $dom = $configurator->tags['URL']->template->asDOM();
         foreach ($dom->getElementsByTagName('a') as $a)
         {
-            $icon = $dom->createElement('i');
-            $icon->setAttribute('class','fas fa-link');
-            $icon->setAttribute('style','margin:0 0 0 5px;');
+            $a->setAttribute('class', 'jj-f-a')
+        }
+        $dom->saveChanges();
+    }
 
-            $a->setAttribute('target', '_blank');
-            $a->appendChild($icon);
+    // added by jjwind320
+    private function configureImg(Configuring $event)
+    {
+        $configurator = $event->configurator;
+
+        // 修改 img 标签增加样式
+        $dom = $configurator->tags['IMG']->template->asDOM();
+        foreach ($dom->getElementsByTagName('img') as $img)
+        {
+            $img->setAttribute('class', 'jj-f-img')
         }
         $dom->saveChanges();
     }

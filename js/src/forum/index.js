@@ -1,19 +1,15 @@
 import { extend } from "flarum/extend";
 import CommentPost from "flarum/components/CommentPost";
+import Swal from "sweetalert2";
 
 app.initializers.add("jjwind320-formatting", () => {
   extend(CommentPost.prototype, "config", function() {
-    const links = this.$("a")
-      .not(".jj-f-link")
-      .not(
-        'a[href$=".mp3"], a[href$=".ogg"], a[href$=".wav"], a[href$=".mp4"], a[href$=".m4a"], a[href$=".acc"], a[href$=".opus"], a[href$=".flac"]'
-      );
-
-    links
+    this.$("a.jj-f-a")
+      .not(".jj-f-a-ext")
       .filter(function() {
         return this.hostname && this.hostname !== location.hostname;
       })
-      .addClass("jj-f-link")
+      .addClass("jj-f-a-ext")
       .on("click", function() {
         var linkAddr = $(this).attr("href");
         window.setTimeout(function() {
@@ -25,5 +21,20 @@ app.initializers.add("jjwind320-formatting", () => {
     this.$("div.Post-body")
       .not(".jj-f-post-body")
       .addClass("jj-f-post-body");
+
+    var isWx =
+      window.navigator.userAgent.toLowerCase().match(/MicroMessenger/i) ==
+      "micromessenger";
+
+    this.$("img.jj-f-img").on("click", function() {
+      var imgSrc = $(this).attr("src");
+
+      if (!isWx) {
+        Swal.fire({
+          imageUrl: imgSrc,
+          showConfirmButton: false
+        });
+      }
+    });
   });
 });

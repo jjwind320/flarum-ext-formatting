@@ -25,14 +25,7 @@ composer require jjwind320/flarum-ext-formatting
 composer update jjwind320/flarum-ext-formatting
 ```
 
-### 链接
-
-- [Packagist](https://packagist.org/packages/jjwind320/flarum-ext-formatting)
-- [GitHub](https://github.com/jjwind320/flarum-ext-formatting)
-
-### 支持的写法
-
-#### BBCode
+### 支持的 BBCODE 写法
 
 -----
 
@@ -105,4 +98,9 @@ composer update jjwind320/flarum-ext-formatting
 - [虎牙](https://www.huya.com/) [MEDIA]虎牙直播网址[/MEDIA]
 - [s9e/textformatter支持的网站](https://s9etextformatter.readthedocs.io/Plugins/MediaEmbed/Sites/)
 - 安全阅片器支持 [PACS=阅片地址][/PACS]
+
+### 链接
+
+- [Packagist](https://packagist.org/packages/jjwind320/flarum-ext-formatting)
+- [GitHub](https://github.com/jjwind320/flarum-ext-formatting)
 
