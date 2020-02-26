@@ -32,7 +32,12 @@ app.initializers.add("jjwind320-formatting", () => {
       if (!isWx) {
         Swal.fire({
           imageUrl: imgSrc,
-          showConfirmButton: false
+          showConfirmButton: false,
+          onOpen: function(modalDom) {
+            $(modalDom).on("click", function() {
+              Swal.close();
+            });
+          }
         });
       }
     });
