@@ -1,6 +1,6 @@
 import { extend } from "flarum/extend";
 import CommentPost from "flarum/components/CommentPost";
-import Swal from "sweetalert2";
+import lightbox from "./lightbox2";
 
 app.initializers.add("jjwind320-formatting", () => {
   extend(CommentPost.prototype, "config", function() {
@@ -26,20 +26,27 @@ app.initializers.add("jjwind320-formatting", () => {
       window.navigator.userAgent.toLowerCase().match(/MicroMessenger/i) ==
       "micromessenger";
 
-    this.$("img.jj-f-img").on("click", function() {
-      var imgSrc = $(this).attr("src");
+    if (!isWx) {
+      console.log(this);
+      this.$("img.jj-f-img").each(function() {
+        $(this).data("lightbox", "1");
+      });
+      lightbox.init();
+    }
+    // this.$("img.jj-f-img").on("click", function() {
+    //   var imgSrc = $(this).attr("src");
 
-      if (!isWx) {
-        Swal.fire({
-          imageUrl: imgSrc,
-          showConfirmButton: false,
-          onOpen: function(modalDom) {
-            $(modalDom).on("click", function() {
-              Swal.close();
-            });
-          }
-        });
-      }
-    });
+    //   if (!isWx) {
+    // Swal.fire({
+    //   imageUrl: imgSrc,
+    //   showConfirmButton: false,
+    //   onOpen: function(modalDom) {
+    //     $(modalDom).on("click", function() {
+    //       Swal.close();
+    //     });
+    //   }
+    // });
+    //   }
+    // });
   });
 });

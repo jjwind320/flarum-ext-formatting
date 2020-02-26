@@ -20,7 +20,8 @@ return [
         ->js(__DIR__.'/js/dist/admin.js'),
     (new Extend\Frontend('forum'))
         ->js(__DIR__.'/js/dist/forum.js')
-        ->css(__DIR__.'/resources/less/forum.less'),
+        ->css(__DIR__.'/resources/less/forum.less')
+        ->css(__DIR__.'/resources/less/lightbox2.less'),
     new Extend\Locales(__DIR__ . '/resources/locale'),
     function (Dispatcher $dispatcher) {
         $dispatcher->subscribe(FormatterConfigurator::class);

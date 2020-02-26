@@ -248,5 +248,13 @@ class FormatterConfigurator
             $img->setAttribute('class', 'jj-f-img');
         }
         $dom->saveChanges();
+
+        
+        $dom = $configurator->tags['UPL-IMAGE-PREVIEW']->template->asDOM();
+        foreach ($dom->getElementsByTagName('img') as $img)
+        {
+            $img->setAttribute('class', 'jj-f-img');
+        }
+        $dom->saveChanges();
     }
 }
