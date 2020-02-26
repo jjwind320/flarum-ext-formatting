@@ -84,6 +84,11 @@ class FormatterConfigurator
             '[z size={NUMBER?;defaultValue=2}]',
             '<span style="display:inline-block;width:{NUMBER}em;"></span>'
         );
+
+        $configurator->BBCodes->addCustom(
+            '[tel number={SIMPLETEXT;useContent}]{TEXT}[/tel]',
+            '<a href="tel:{SIMPLETEXT}" class="jj-f-tel">{TEXT}</a>'
+        );
     }
 
     // added by jjwind320
