@@ -3,16 +3,16 @@ import CommentPost from "flarum/components/CommentPost";
 import lightbox from "./lightbox2";
 
 app.initializers.add("jjwind320-formatting", () => {
-  extend(CommentPost.prototype, "config", function() {
+  extend(CommentPost.prototype, "config", function () {
     this.$("a.jj-f-a")
       .not(".jj-f-a-ext")
-      .filter(function() {
+      .filter(function () {
         return this.hostname && this.hostname !== location.hostname;
       })
       .addClass("jj-f-a-ext")
-      .on("click", function() {
+      .on("click", function () {
         var linkAddr = $(this).attr("href");
-        window.setTimeout(function() {
+        window.setTimeout(function () {
           window.open(linkAddr, "_blank");
         }, 0);
         return false;
@@ -27,26 +27,25 @@ app.initializers.add("jjwind320-formatting", () => {
       "micromessenger";
 
     if (!isWx) {
-      console.log(this);
-      this.$("img.jj-f-img").each(function() {
-        $(this).data("lightbox", "1");
+      let postId = this.props["post"].data.id;
+      this.$("img.jj-f-img")
+        .not(".jj-f-img-i")
+        .each(function () {
+          let a =
+            '<a class="jj-f-img-a" href="' +
+            $(this).attr("src") +
+            '" data-lightbox="post-' +
+            postId +
+            '" data-alt="' +
+            ($(this).attr("alt") || "") +
+            '" data-title=""></a>';
+          $(this)
+            .addClass("jj-f-img-i")
+            .wrap(a);
+        });
+      lightbox.option({
+        albumLabel: "%1 / %2"
       });
-      lightbox.init();
     }
-    // this.$("img.jj-f-img").on("click", function() {
-    //   var imgSrc = $(this).attr("src");
-
-    //   if (!isWx) {
-    // Swal.fire({
-    //   imageUrl: imgSrc,
-    //   showConfirmButton: false,
-    //   onOpen: function(modalDom) {
-    //     $(modalDom).on("click", function() {
-    //       Swal.close();
-    //     });
-    //   }
-    // });
-    //   }
-    // });
   });
 });
