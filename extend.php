@@ -12,6 +12,7 @@
 namespace JJwind320\FlarumExtFormatting;
 
 use Flarum\Extend;
+use Flarum\Frontend\Document;
 use Illuminate\Events\Dispatcher;
 use JJwind320\FlarumExtFormatting\FormatterConfigurator;
 
@@ -21,7 +22,10 @@ return [
     (new Extend\Frontend('forum'))
         ->js(__DIR__.'/js/dist/forum.js')
         ->css(__DIR__.'/resources/less/forum.less')
-        ->css(__DIR__.'/resources/less/lightbox2.less'),
+        ->css(__DIR__.'/resources/less/lightbox2.less')
+        ->content(function (Document $document) {
+            $document->head[] = '<script src="//res.wx.qq.com/open/js/jweixin-1.6.0.js" type="text/javascript" async=""></script>';
+        }),
     new Extend\Locales(__DIR__ . '/resources/locale'),
     function (Dispatcher $dispatcher) {
         $dispatcher->subscribe(FormatterConfigurator::class);
