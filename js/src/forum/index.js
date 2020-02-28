@@ -46,13 +46,16 @@ app.initializers.add("jjwind320-formatting", () => {
         albumLabel: "%1 / %2"
       });
     } else {
-      var urls = this.$("img.jj-f-img, img.raw-image")
-        .map(function () {
-          return $(this).attr("src");
-        }).get();
       this.$("img.jj-f-img, img.raw-image").each(function () {
-        var curUrl = $(this).attr("src");
         $(this).on("click", function () {
+          let curUrl = $(this).attr("src") || "";
+          let urls =
+            $(this)
+              .parents("article.CommentPost")
+              .find("img.jj-f-img, img.raw-image")
+              .map(function () {
+                return $(this).attr("src");
+              }).get() || [];
           wx.ready(function () {
             wx.previewImage({
               current: curUrl, // 当前显示图片的http链接
@@ -75,8 +78,9 @@ app.initializers.add("jjwind320-formatting", () => {
       var configWxJsSdk = function () {
         m.request({
           method: "GET",
-          url: "http://api.film.rimag.com.cn/api/weixin/GetJsSdkUiPackage",
-          params: { url: location.href.split("#")[0] },
+          url:
+            "http://api.film.rimag.com.cn/api/weixin/GetJsSdkUiPackage?url=" +
+            encodeURIComponent(location.href.split("#")[0]),
           withCredentials: true
         }).then(function (res) {
           wx.config({
