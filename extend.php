@@ -25,6 +25,13 @@ return [
         ->css(__DIR__.'/resources/less/lightbox2.less')
         ->content(function (Document $document) {
             $document->head[] = '<script src="//res.wx.qq.com/open/js/jweixin-1.6.0.js" type="text/javascript" async=""></script>';
+            $document->head[] = <<<scp
+            <script>
+            if(["/","/all"].includes(location.pathname) && location.search){
+                location.href = location.origin+"/";
+            }
+            </script>
+            scp;
         }),
     new Extend\Locales(__DIR__ . '/resources/locale'),
     function (Dispatcher $dispatcher) {
