@@ -52,10 +52,12 @@ app.initializers.add("jjwind320-formatting", () => {
         }).get();
       this.$("img.jj-f-img, img.raw-image").each(function () {
         var curUrl = $(this).attr("src");
-        wx.ready(function () {
-          wx.previewImage({
-            current: curUrl, // 当前显示图片的http链接
-            urls: urls // 需要预览的图片http链接列表
+        $(this).on("click", function () {
+          wx.ready(function () {
+            wx.previewImage({
+              current: curUrl, // 当前显示图片的http链接
+              urls: urls // 需要预览的图片http链接列表
+            });
           });
         });
       });
